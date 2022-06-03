@@ -29,5 +29,4 @@ class RetrofitInstance {
             retrofit.create(LottoApi::class.java)
         }
     }
-
 }

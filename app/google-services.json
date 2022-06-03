@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "188320225162",
+    "firebase_url": "https://lottoapp-79d7e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "lottoapp-79d7e",
+    "storage_bucket": "lottoapp-79d7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188320225162:android:7525c3e45d5b4af31c5a73",
+        "android_client_info": {
+          "package_name": "com.yongjun.lottoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "188320225162-5uh3ptb032orr5fv9cmgm70sv952r7rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKM7n2kX3VETz0QXrky6UpuaIDgwe65GM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "188320225162-5uh3ptb032orr5fv9cmgm70sv952r7rf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

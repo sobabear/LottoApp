@@ -13,8 +13,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    val lottoRepository = LottoRepository()
-
     private val _lottoApiResponseLiveData = MutableLiveData<LottoApiResponse>()
     val lottoApiResponseLiveData: MutableLiveData<LottoApiResponse> get() = _lottoApiResponseLiveData
 
@@ -24,7 +22,7 @@ class MainViewModel : ViewModel() {
     fun getWinningNumber(number: Int) = viewModelScope.launch {
         _lottoApiResponseLiveData.value = LottoApiResponse.loading()
 
-        when (val result = lottoRepository.getWinningNumber(number)) {
+        when (val result = LottoRepository.getWinningNumber(number)) {
             is NewResult.Success -> {
                 _lottoApiResponseLiveData.value = LottoApiResponse.success(result.data)
             }
@@ -36,8 +34,8 @@ class MainViewModel : ViewModel() {
 
     fun getRecentWinningNumber() = viewModelScope.launch {
         _recentLottoApiResponseLiveData.value = LottoApiResponse.loading()
-        Log.d("❤️ log", lottoRepository.getRecentWinningNumber().toString())
-        when (val result = lottoRepository.getRecentWinningNumber()) {
+        Log.d("❤️ log", LottoRepository.getRecentWinningNumber().toString())
+        when (val result = LottoRepository.getRecentWinningNumber()) {
             is NewResult.Success -> {
                 _recentLottoApiResponseLiveData.value = LottoApiResponse.success(result.data)
             }
