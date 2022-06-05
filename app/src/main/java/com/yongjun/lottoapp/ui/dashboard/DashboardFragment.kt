@@ -61,12 +61,18 @@ class DashboardFragment : Fragment() {
     private fun setupButton(context: Context) {
         var tempLottoMap = lottoMap
         button.setOnClickListener {
+            for(i in 1..45) {
+                tempLottoMap[i] = 0
+            }
             if (LottoRepository.lottoList.count() < LottoRepository.recentLottoOrder) {
                 Log.d("😀", "It is small")
-                android.widget.Toast.makeText(context, "waitwait", 2)
+                android.widget.Toast.makeText(context, "잠시 후 다시 시도해주세요", 2)
             }
+            android.widget.Toast.makeText(context, "waitwait", 2)
             var a = edtTextView.text.toString().toInt()
             var gap = LottoRepository.recentLottoOrder - a
+            Log.e("😭", "${LottoRepository.lottoList}")
+            Thread.sleep(500)
             for (i in gap..LottoRepository.recentLottoOrder - 1) {
                 Log.d("😀", " loop ${i} ${LottoRepository.lottoList[i]}")
                 var lotto = LottoRepository.lottoList[i]
@@ -79,10 +85,20 @@ class DashboardFragment : Fragment() {
                 tempLottoMap[lotto.drwtNo6!!] = (tempLottoMap[lotto.drwtNo6!!] ?: 0) + 1
                 tempLottoMap[lotto.bnusNo!!] = (tempLottoMap[lotto.bnusNo!!] ?: 0) + 1
             }
-            Log.d("😀", " clicked ${tempLottoMap}")
-            Log.d("😀", " ${edtTextView.text}")
-
+            var sortedByValue = tempLottoMap.toList().sortedWith(compareByDescending({it.second})).toMap()
+            var _sortedByValueList = tempLottoMap.toList().sortedWith(compareByDescending({it.second}))
+            recomendationTextView.text = "" +
+                    "${gap + 1} ~ ${LottoRepository.recentLottoOrder} (${edtTextView.text}) 동안 \n\n" +
+                    " ${_sortedByValueList[0].first} 번   ${_sortedByValueList[0].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[1].first} 번   ${_sortedByValueList[1].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[2].first} 번   ${_sortedByValueList[2].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[3].first} 번   ${_sortedByValueList[3].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[4].first} 번   ${_sortedByValueList[4].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[5].first} 번   ${_sortedByValueList[5].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[6].first} 번   ${_sortedByValueList[6].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[7].first} 번   ${_sortedByValueList[7].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[8].first} 번   ${_sortedByValueList[8].second} 회  당첨!  \n" +
+                    " ${_sortedByValueList[9].first} 번   ${_sortedByValueList[9].second} 회  당첨!  \n"
         }
-
     }
 }

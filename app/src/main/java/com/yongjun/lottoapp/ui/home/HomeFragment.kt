@@ -47,8 +47,8 @@ class HomeFragment : Fragment() {
                 Status.SUCCESS -> {
                     response.data?.let { lotto ->
                         binding.txtDate.text = lotto.drwNoDate
-                        binding.txtNumber.text = "${lotto.drwtNo1} ${lotto.drwtNo2}  " +
-                                "${lotto.drwtNo3} ${lotto.drwtNo4} ${lotto.drwtNo5} ${lotto.drwtNo6} 보너스 : ${lotto.bnusNo}"
+                        binding.txtNumber.text = "${lotto.drwtNo1} | ${lotto.drwtNo2} | " +
+                                "${lotto.drwtNo3} | ${lotto.drwtNo4} | ${lotto.drwtNo5} | ${lotto.drwtNo6} 보너스 : ${lotto.bnusNo}"
                     }
                 }
                 Status.ERROR -> {
@@ -64,8 +64,8 @@ class HomeFragment : Fragment() {
                 }
                 Status.SUCCESS -> {
                     response.data?.let { lotto ->
-                        binding.recentNumbers.text = "${lotto.drwtNo1} ${lotto.drwtNo2}  " +
-                        "${lotto.drwtNo3} ${lotto.drwtNo4} ${lotto.drwtNo5} ${lotto.drwtNo6} 보너스 : ${lotto.bnusNo}"
+                        binding.recentNumbers.text = "${lotto.drwtNo1} | ${lotto.drwtNo2} | " +
+                                "${lotto.drwtNo3} | ${lotto.drwtNo4} | ${lotto.drwtNo5} | ${lotto.drwtNo6} 보너스 : ${lotto.bnusNo}"
                         binding.recentNumberTitle.text = "${lotto.drwNo}회(최신)"
 
                     }

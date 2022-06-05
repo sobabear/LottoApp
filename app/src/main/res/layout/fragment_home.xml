@@ -25,13 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/txt_date"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2 19 24 32 38 45"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date"
+        tools:text="2 19 24 32 38 45" />
 
     <EditText
         android:id="@+id/edt_round"
@@ -75,7 +75,7 @@
         android:layout_marginTop="16dp"
         android:text="최신 당첨 번호 로딩중"
         android:textAlignment="center"
-        android:textSize="36sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
