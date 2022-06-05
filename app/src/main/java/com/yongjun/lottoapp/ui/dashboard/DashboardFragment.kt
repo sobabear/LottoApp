@@ -1,6 +1,8 @@
 package com.yongjun.lottoapp.ui.dashboard
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yongjun.lottoapp.LottoRepository.LottoRepository
@@ -61,44 +64,75 @@ class DashboardFragment : Fragment() {
     private fun setupButton(context: Context) {
         var tempLottoMap = lottoMap
         button.setOnClickListener {
-            for(i in 1..45) {
-                tempLottoMap[i] = 0
-            }
-            if (LottoRepository.lottoList.count() < LottoRepository.recentLottoOrder) {
-                Log.d("😀", "It is small")
-                android.widget.Toast.makeText(context, "잠시 후 다시 시도해주세요", 2)
-            }
-            android.widget.Toast.makeText(context, "waitwait", 2)
-            var a = edtTextView.text.toString().toInt()
-            var gap = LottoRepository.recentLottoOrder - a
-            Log.e("😭", "${LottoRepository.lottoList}")
-            Thread.sleep(500)
-            for (i in gap..LottoRepository.recentLottoOrder - 1) {
-                Log.d("😀", " loop ${i} ${LottoRepository.lottoList[i]}")
-                var lotto = LottoRepository.lottoList[i]
+            if (isOnline(context)) {
 
-                tempLottoMap[lotto.drwtNo1!!] = (tempLottoMap[lotto.drwtNo1!!] ?: 0) + 1
-                tempLottoMap[lotto.drwtNo2!!] = (tempLottoMap[lotto.drwtNo2!!] ?: 0) + 1
-                tempLottoMap[lotto.drwtNo3!!] = (tempLottoMap[lotto.drwtNo3!!] ?: 0) + 1
-                tempLottoMap[lotto.drwtNo4!!] = (tempLottoMap[lotto.drwtNo4!!] ?: 0) + 1
-                tempLottoMap[lotto.drwtNo5!!] = (tempLottoMap[lotto.drwtNo5!!] ?: 0) + 1
-                tempLottoMap[lotto.drwtNo6!!] = (tempLottoMap[lotto.drwtNo6!!] ?: 0) + 1
-                tempLottoMap[lotto.bnusNo!!] = (tempLottoMap[lotto.bnusNo!!] ?: 0) + 1
+
+                for (i in 1..45) {
+                    tempLottoMap[i] = 0
+                }
+                if (LottoRepository.lottoList.count() < LottoRepository.recentLottoOrder) {
+                    Log.d("😀", "It is small")
+                    android.widget.Toast.makeText(context, "잠시 후 다시 시도해주세요", Toast.LENGTH_LONG)
+                        .show()
+                }
+                android.widget.Toast.makeText(context, "waitwait", 2)
+                var a = edtTextView.text.toString().toInt()
+                var gap = LottoRepository.recentLottoOrder - a
+                Log.e("😭", "${LottoRepository.lottoList}")
+                Thread.sleep(500)
+                for (i in gap..LottoRepository.recentLottoOrder - 1) {
+                    Log.d("😀", " loop ${i} ${LottoRepository.lottoList[i]}")
+                    var lotto = LottoRepository.lottoList[i]
+
+                    tempLottoMap[lotto.drwtNo1!!] = (tempLottoMap[lotto.drwtNo1!!] ?: 0) + 1
+                    tempLottoMap[lotto.drwtNo2!!] = (tempLottoMap[lotto.drwtNo2!!] ?: 0) + 1
+                    tempLottoMap[lotto.drwtNo3!!] = (tempLottoMap[lotto.drwtNo3!!] ?: 0) + 1
+                    tempLottoMap[lotto.drwtNo4!!] = (tempLottoMap[lotto.drwtNo4!!] ?: 0) + 1
+                    tempLottoMap[lotto.drwtNo5!!] = (tempLottoMap[lotto.drwtNo5!!] ?: 0) + 1
+                    tempLottoMap[lotto.drwtNo6!!] = (tempLottoMap[lotto.drwtNo6!!] ?: 0) + 1
+                    tempLottoMap[lotto.bnusNo!!] = (tempLottoMap[lotto.bnusNo!!] ?: 0) + 1
+                }
+                var sortedByValue =
+                    tempLottoMap.toList().sortedWith(compareByDescending({ it.second })).toMap()
+                var _sortedByValueList =
+                    tempLottoMap.toList().sortedWith(compareByDescending({ it.second }))
+                recomendationTextView.text = "" +
+                        "${gap + 1} ~ ${LottoRepository.recentLottoOrder} (${edtTextView.text}) 동안 \n\n" +
+                        " ${_sortedByValueList[0].first} 번   ${_sortedByValueList[0].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[1].first} 번   ${_sortedByValueList[1].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[2].first} 번   ${_sortedByValueList[2].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[3].first} 번   ${_sortedByValueList[3].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[4].first} 번   ${_sortedByValueList[4].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[5].first} 번   ${_sortedByValueList[5].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[6].first} 번   ${_sortedByValueList[6].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[7].first} 번   ${_sortedByValueList[7].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[8].first} 번   ${_sortedByValueList[8].second} 회  당첨!  \n" +
+                        " ${_sortedByValueList[9].first} 번   ${_sortedByValueList[9].second} 회  당첨!  \n"
+            } else {
+                Toast.makeText(context, "에러가 났어요, 인터넷 연결상태를 확인해주세요", 2000).show()
             }
-            var sortedByValue = tempLottoMap.toList().sortedWith(compareByDescending({it.second})).toMap()
-            var _sortedByValueList = tempLottoMap.toList().sortedWith(compareByDescending({it.second}))
-            recomendationTextView.text = "" +
-                    "${gap + 1} ~ ${LottoRepository.recentLottoOrder} (${edtTextView.text}) 동안 \n\n" +
-                    " ${_sortedByValueList[0].first} 번   ${_sortedByValueList[0].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[1].first} 번   ${_sortedByValueList[1].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[2].first} 번   ${_sortedByValueList[2].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[3].first} 번   ${_sortedByValueList[3].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[4].first} 번   ${_sortedByValueList[4].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[5].first} 번   ${_sortedByValueList[5].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[6].first} 번   ${_sortedByValueList[6].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[7].first} 번   ${_sortedByValueList[7].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[8].first} 번   ${_sortedByValueList[8].second} 회  당첨!  \n" +
-                    " ${_sortedByValueList[9].first} 번   ${_sortedByValueList[9].second} 회  당첨!  \n"
         }
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
