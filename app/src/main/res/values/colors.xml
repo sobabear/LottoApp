@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="units">#FFECBD23</color>
+    <color name="tens">#FF7dc0ec</color>
+    <color name="twenties">#e26969</color>
+    <color name="thrities">#a0a0a0</color>
+    <color name="forties">#b2d141</color>
 </resources>

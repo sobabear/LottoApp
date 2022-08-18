@@ -1,6 +1,9 @@
 package com.yongjun.lottoapp.ui.home
 
 import android.content.Context
+import android.graphics.ColorFilter
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -10,9 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.yongjun.lottoapp.Model.LottoModel
 import com.yongjun.lottoapp.Model.Status
+import com.yongjun.lottoapp.R
 import com.yongjun.lottoapp.databinding.ActivityMainBinding
 import com.yongjun.lottoapp.databinding.FragmentHomeBinding
 
@@ -23,7 +29,6 @@ class HomeFragment : Fragment() {
     }
 
     private var _binding: FragmentHomeBinding? = null
-//    private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,9 +44,6 @@ class HomeFragment : Fragment() {
             }
 
             mainViewModel.getRecentWinningNumber()
-            dosomething()
-
-
 
             mainViewModel.lottoApiResponseLiveData.observe(this) { response ->
                 when (response.status) {
@@ -52,8 +54,7 @@ class HomeFragment : Fragment() {
                     Status.SUCCESS -> {
                         response.data?.let { lotto ->
                             binding.txtDate.text = lotto.drwNoDate
-                            binding.txtNumber.text = "${lotto.drwtNo1} | ${lotto.drwtNo2} | " +
-                                    "${lotto.drwtNo3} | ${lotto.drwtNo4} | ${lotto.drwtNo5} | ${lotto.drwtNo6} 보너스 : ${lotto.bnusNo}"
+                            configure(container!!.context, lotto, binding)
                         }
                     }
                     Status.ERROR -> {
@@ -88,8 +89,6 @@ class HomeFragment : Fragment() {
 
         }
 
-
-
         return root
     }
 
@@ -98,9 +97,6 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun dosomething() {
-//        mainViewModel.getRecentWinningNumber(binding.recentNumbers.text.toString().toInt())
-    }
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -121,5 +117,44 @@ class HomeFragment : Fragment() {
             }
         }
         return false
+    }
+
+    fun configure(context: Context, lotto: LottoModel, binding: FragmentHomeBinding) {
+
+        binding.number1.text = "${lotto.drwtNo1}"
+        configureColor(lotto.drwtNo1, binding.number1, context)
+
+        binding.number2.text = "${lotto.drwtNo2}"
+        configureColor(lotto.drwtNo2, binding.number2, context)
+
+        binding.number3.text = "${lotto.drwtNo3}"
+        configureColor(lotto.drwtNo3, binding.number3, context)
+
+        binding.number4.text = "${lotto.drwtNo4}"
+        configureColor(lotto.drwtNo4, binding.number4, context)
+
+        binding.number5.text = "${lotto.drwtNo5}"
+        configureColor(lotto.drwtNo5, binding.number5, context)
+
+        binding.number6.text = "${lotto.drwtNo6}"
+        configureColor(lotto.drwtNo6, binding.number6, context)
+
+        binding.bonusNumber.text = "${lotto.bnusNo}"
+        configureColor(lotto.bnusNo, binding.bonusNumber, context)
+    }
+
+    fun configureColor(_number: Int?, textView: TextView, context: Context) {
+        var number: Int = _number ?: 50
+        if (number < 10 && number >= 1) {
+            textView.background = ContextCompat.getDrawable(context, R.drawable.radius_tens)
+        } else if (number < 20 && number >= 10) {
+            textView.background = ContextCompat.getDrawable(context, R.drawable.radius_twenties)
+        } else if (number < 30 && number >= 20) {
+            textView.background = ContextCompat.getDrawable(context, R.drawable.radius_twenties)
+        } else if (number < 40 && number >= 30) {
+            textView.background = ContextCompat.getDrawable(context, R.drawable.radius_thirties)
+        } else {
+            textView.background = ContextCompat.getDrawable(context, R.drawable.radius_forties)
+        }
     }
 }

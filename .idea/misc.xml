@@ -3,15 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.30764721856600996" />
+        <entry key="app/src/main/res/drawable/corner_radius.xml" value="0.179" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.18" />
+        <entry key="app/src/main/res/drawable/radius_forties.xml" value="0.153" />
+        <entry key="app/src/main/res/drawable/radius_tens.xml" value="0.153" />
+        <entry key="app/src/main/res/drawable/radius_thirties.xml" value="0.153" />
+        <entry key="app/src/main/res/drawable/radius_twenties.xml" value="0.153" />
+        <entry key="app/src/main/res/drawable/radius_units.xml" value="0.2365" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.253076171875" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.19545491536458345" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.424951171875" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.6368576049804686" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2631134033203125" />
+        <entry key="app/src/main/res/layout/rounded_corner.xml" value="0.17135416666666667" />
         <entry key="app/src/main/res/layout/total_list.xml" value="0.7387069702148439" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
