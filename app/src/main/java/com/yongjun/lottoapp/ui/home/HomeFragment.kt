@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -40,8 +41,26 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
         if (isOnline(container!!.context)) {
             binding.btnSearch.setOnClickListener {
-                mainViewModel.getWinningNumber(binding.edtRound.text.toString().toInt())
+                var editText = binding.edtRound.text.toString()
+                if (editText.isNotEmpty() && editText.toIntOrNull() != null) {
+                    mainViewModel.getWinningNumber(binding.edtRound.text.toString().toInt())
+                }
             }
+            binding.edtRound.setOnEditorActionListener { textView, action, keyEvent ->
+                var i = action
+                var num = EditorInfo.IME_ACTION_DONE
+                var isSame = num == i
+                var handled = false
+                if (isSame) {
+                    var editText = binding.edtRound.text.toString()
+                    if (editText.isNotEmpty() && editText.toIntOrNull() != null) {
+                        mainViewModel.getWinningNumber(binding.edtRound.text.toString().toInt())
+                    }
+                    handled = true
+                }
+                handled
+            }
+
 
             mainViewModel.getRecentWinningNumber()
 
